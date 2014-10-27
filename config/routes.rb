@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   get 'login/create'
+  post 'login/create'
 
   get 'login/destroy'
+  post 'login/destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
