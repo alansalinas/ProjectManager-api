@@ -9,8 +9,12 @@ class ApplicationController < ActionController::Base
    # :current_user_id This is a common way to handle user login in
    # a Rails application; logging in sets the session value and
    # logging out removes it.
-   def current_user
-     @_current_user ||= session[:current_user_id] &&
-       User.find_by(id: session[:current_user_id])
+   def current_user (token)
+     #@_current_user ||= session[:current_user_id] &&
+      # User.find_by(id: session[:current_user_id])
+       
+       return User.find_by(auth_token: token)
+       
+      
    end
 end

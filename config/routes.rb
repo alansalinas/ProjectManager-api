@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'projects/get'
+
+  get 'projects/update'
+
   get 'login/create'
   post 'login/create'
 

@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
      #encrypted_password == encrypt(submitted_password)
    end
   
-  def self.authenticate(email, submitted_password) 
-     @user = User.find_by(email: email)
+  def self.authenticate(nombre, submitted_password) 
+     @user = User.find_by(nombre: nombre)
      return nil if @user.nil?
      return @user if @user.has_password?(submitted_password, @user.password)
    end
@@ -27,5 +27,6 @@ class User < ActiveRecord::Base
    def secure_hash(string)
      Digest::SHA2.hexdigest(string)
    end
+   
    
 end

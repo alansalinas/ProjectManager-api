@@ -1,24 +1,80 @@
 class LoginController < ApplicationController
   
   def create
-    p params[:user][:nombre]
-    if user = User.authenticate(params[:user][:nombre], params[:user][:password])
+    
+    nombre = params[:nombre]
+    pass = params[:password]
+    json_res = {:status => "ERROR"}
+    
+    if nombre != nil && pass != nil
+      
+    p params[:nombre]
+    p params[:password]
+    
+    if user = User.authenticate(nombre, pass)
       # Save the user ID in the session so it can be used in
       # subsequent requests
-      session[:current_user_id] = user.id
+      #session[:current_user_id] = user.id
       p user.id
-      render json: { status :ok}
-    else
-      render json: { status :error}
+      
+      key = Devise.friendly_token
+      user.auth_token = key
+      user.save
+      
+      json_res = {:status => "OK", :auth_token => key}
     end
     
   end
+  render json: json_res
+  end
+  
+  
+  #
+  # sobreescribir el token de autenticacion si el usuario
+  # quiere forzar el login de otro dispositivo
+  def overwrite
+    
+    nombre = params[:nombre]
+    pass = params[:password]
+    json_res = {:status => "ERROR"}
+    
+    if nombre != nil && pass != nil
+      
+    p params[:nombre]
+    p params[:password]
+    
+    if user = User.authenticate(nombre, pass)
+      # Save the user ID in the session so it can be used in
+      # subsequent requests
+      #session[:current_user_id] = user.id
+      p user.id
+      
+      key = Devise.friendly_token
+      user.auth_token = key
+      user.save
+      
+      json_res = {:status => "OK", :auth_token => key}
+    end
+    
+  end
+  render json: json_res
+    
+  end
+  
 
     # "Delete" a login, aka "log the user out"
   def destroy
        # Remove the user id from the session
-       @_current_user = session[:current_user_id] = nil
-       render json: { status :ok}
+       #@_current_user = session[:current_user_id] = nil
+       
+       user = User.find_by(auth_token: params[:auth_token])
+       
+       if user != nil
+       user.auth_token = nil
+       user.save
+       end
+       
+       render json: { :status => "OK"}
   end
 
 end

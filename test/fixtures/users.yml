@@ -4,8 +4,10 @@ one:
   nombre: MyString
   password: MyString
   proyectos: 1
+  auth_token: MyString
 
 two:
   nombre: MyString
   password: MyString
   proyectos: 1
+  auth_token: MyString
