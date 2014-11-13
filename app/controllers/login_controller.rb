@@ -4,7 +4,7 @@ class LoginController < ApplicationController
     
     nombre = params[:nombre]
     pass = params[:password]
-    json_res = {:status => "ERROR"}
+    json_res = {:status => "ERROR", :code => "No name/password"}
     
     if nombre != nil && pass != nil
       
@@ -15,6 +15,10 @@ class LoginController < ApplicationController
       # Save the user ID in the session so it can be used in
       # subsequent requests
       #session[:current_user_id] = user.id
+      if user.auth_token != nil
+        json_res{:status => "ERROR", :code => "User already has a token, overwrite session token? /login/overwrite"}
+      
+      else
       p user.id
       
       key = Devise.friendly_token
@@ -23,7 +27,12 @@ class LoginController < ApplicationController
       
       json_res = {:status => "OK", :auth_token => key}
     end
+    else
+    # else not authenticated with nombre, pass
+    json_res = {:status => "ERROR", :code => "User nonexistent"}
+    end
     
+    # else noname or password
   end
   render json: json_res
   end
@@ -36,7 +45,7 @@ class LoginController < ApplicationController
     
     nombre = params[:nombre]
     pass = params[:password]
-    json_res = {:status => "ERROR"}
+    json_res = {:status => "ERROR", :code => "No name/password"}
     
     if nombre != nil && pass != nil
       
@@ -54,7 +63,14 @@ class LoginController < ApplicationController
       user.save
       
       json_res = {:status => "OK", :auth_token => key}
+      
+    else
+      
+      # else not authenticated with nombre, pass
+      json_res = {:status => "ERROR", :code => "User nonexistent"}
     end
+    
+    # noname or password, json response already set
     
   end
   render json: json_res
