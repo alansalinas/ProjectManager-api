@@ -25,7 +25,7 @@ class LoginController < ApplicationController
       user.auth_token = key
       user.save
       
-      json_res = {:status => "OK", :auth_token => key}
+      json_res = {:status => "OK", :code => 4, :auth_token => key}  # sucess login
     end
     else
     # else not authenticated with nombre, pass
@@ -62,7 +62,7 @@ class LoginController < ApplicationController
       user.auth_token = key
       user.save
       
-      json_res = {:status => "OK", :code => 4, :auth_token => key}
+      json_res = {:status => "OK", :code => 4, :auth_token => key}  # overwritten
       
     else
       
