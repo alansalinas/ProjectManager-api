@@ -90,7 +90,7 @@ class LoginController < ApplicationController
        user.save
        end
        
-       render json: { :status => "OK"}
+       render json: {:status => "OK", :code => 5}
   end
 
 end
