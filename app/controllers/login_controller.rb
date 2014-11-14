@@ -4,7 +4,7 @@ class LoginController < ApplicationController
     
     nombre = params[:nombre]
     pass = params[:password]
-    json_res = {:status => "ERROR", :code => "No name/password"}
+    json_res = {:status => "ERROR", :code => 0, :description => "No name/password"}
     
     if nombre != nil && pass != nil
       
@@ -16,7 +16,7 @@ class LoginController < ApplicationController
       # subsequent requests
       #session[:current_user_id] = user.id
       if user.auth_token != nil
-        json_res = {:status => "ERROR", :code => "User already has a token, overwrite session token? /login/overwrite"}
+        json_res = {:status => "ERROR", :code => 2, :description => "User already has a token, overwrite session token? /login/overwrite"}
       
       else
       p user.id
@@ -29,7 +29,7 @@ class LoginController < ApplicationController
     end
     else
     # else not authenticated with nombre, pass
-    json_res = {:status => "ERROR", :code => "User nonexistent"}
+    json_res = {:status => "ERROR", :code => 3,  :description => "User nonexistent"}
     end
     
     # else noname or password
@@ -45,7 +45,7 @@ class LoginController < ApplicationController
     
     nombre = params[:nombre]
     pass = params[:password]
-    json_res = {:status => "ERROR", :code => "No name/password"}
+    json_res = {:status => "ERROR", :code => 0, :description => "No name/password"}
     
     if nombre != nil && pass != nil
       
@@ -67,7 +67,7 @@ class LoginController < ApplicationController
     else
       
       # else not authenticated with nombre, pass
-      json_res = {:status => "ERROR", :code => "User nonexistent"}
+      json_res = {:status => "ERROR", :code => 0, :description => "User nonexistent"}
     end
     
     # noname or password, json response already set
