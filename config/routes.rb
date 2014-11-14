@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   get 'login/create'
   post 'login/create'
+  
+  get 'login/overwrite'
+  post 'login/overwrite'
 
   get 'login/destroy'
   post 'login/destroy'
