@@ -16,7 +16,7 @@ class LoginController < ApplicationController
       # subsequent requests
       #session[:current_user_id] = user.id
       if user.auth_token != nil
-        json_res{:status => "ERROR", :code => "User already has a token, overwrite session token? /login/overwrite"}
+        json_res = {:status => "ERROR", :code => "User already has a token, overwrite session token? /login/overwrite"}
       
       else
       p user.id
