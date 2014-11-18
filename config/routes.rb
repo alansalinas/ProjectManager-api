@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'tasks/get'
+
+  get 'tasks/update'
+
   get 'projects/get'
 
   get 'projects/update'

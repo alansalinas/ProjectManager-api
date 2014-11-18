@@ -82,15 +82,18 @@ class LoginController < ApplicationController
   def destroy
        # Remove the user id from the session
        #@_current_user = session[:current_user_id] = nil
+       json_res = {:status => "ERROR", :code => 1, :description => "Invalid token"}
        
        user = User.find_by(auth_token: params[:auth_token])
        
        if user != nil
        user.auth_token = nil
        user.save
+       json_res = {:status => "OK", :code => 5, :description => "Session destroyed"}
+       
        end
        
-       render json: {:status => "OK", :code => 5}
+       render json: json_red
   end
 
 end
