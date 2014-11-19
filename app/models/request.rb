@@ -10,4 +10,9 @@ class Request < ActiveRecord::Base
     return jsonObject.code
   end
   
+  def print(a)
+    p a
+    return 1
+  end
+  
 end
