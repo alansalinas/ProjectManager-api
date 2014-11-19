@@ -1,13 +1,13 @@
 class Request < ActiveRecord::Base
   
-  def status(JsonObject)
-    p JsonObject
-    return JsonObject.status
+  def status(jsonObject)
+    p jsonObject
+    return jsonObject.status
   end
   
-  def code(JsonObject)
-    p JsonObject
-    return JsonObject.code
+  def code(jsonObject)
+    p jsonObject
+    return jsonObject.code
   end
   
 end
