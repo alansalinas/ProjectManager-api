@@ -32,9 +32,12 @@ class Request < ActiveRecord::Base
     else # autenticar manualmente por que no hay metodo en controller aqui
       current_user = User.find_by(auth_token: auth_token)
       p "AUTH NO NIL"
+      p current_user
       auth_token = req[:auth_token]
       p auth_token
     if current_user != nil
+      p current_user.nombre
+      p current_user.id
       json_res = {:status => "OK", :code => 6, :nombre => current_user.nombre, :id => current_user.id, :description => "Succesful API call"}
       p "HAY USER"
     else

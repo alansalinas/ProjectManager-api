@@ -69,7 +69,6 @@ class ProjectsController < ApplicationController
         p.local_id = j[:id]
         p.save    # guarda entrada de Project asignada a usuario en db
       end
-    end
       
       
       # encontrar tasks de usuario en db
