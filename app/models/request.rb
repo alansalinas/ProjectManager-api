@@ -30,11 +30,12 @@ class Request < ActiveRecord::Base
       p "AUTH TOKEN NIL"
       json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
     else # autenticar manualmente por que no hay metodo en controller aqui
+      auth_token = req[:auth_token]
+      p auth_token
       current_user = User.find_by(auth_token: auth_token)
       p "AUTH NO NIL"
       p current_user
-      auth_token = req[:auth_token]
-      p auth_token
+      
     if current_user != nil
       p current_user.nombre
       p current_user.id
