@@ -4,85 +4,182 @@ class ProjectsController < ApplicationController
   # returns an array of all the projects owned by the user authenticated via the token provieded
   #
   def get
-    if params[:auth_token] == nil
-      json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
-    else
-    @current_user = current_user(params[:auth_token])
-    if @current_user != nil
-      json_res = {:status => "OK", :code => 6, :description => "Get Projects"}
+    p "GETOO"
+    @request = params[:request]
+
+    p " P REQUEST"
+    p @request
+    @res = Request.validate(@request)
+    
+    
+    p @res
       
-    else
-      json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
-    end
+    if res[:code] == 6
+
+      @res[:projects] = getProjects
+      @res[:tasks] = getTasks
+      
+      
+    end # end response to code succesful
     
-  end #end authtoken nil
     
-  render json: json_res
+  render json: @res
     
   end #end get
 
 
 
-  # UPDATE API
+  # SYNC API
   # Creates one or more entries in the Project model database, according to the entries provided
-  # in the JSON request object
+  # in the JSON request object, deletes the ones that are not present in the JSON request from db
   # 
   def sync
     
-    if params[:auth_token] == nil
-      json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
-      
-    else # hay token en parametro auth_token
-      @current_user = current_user(params[:auth_token])
-      if @current_user != nil
-        json_res = {:status => "OK", :code => 7, :description => "Projects and tasks synced with database"}
-        # ejectuar el sync
-        
-        
-      else # no encontro user con el token dado
-        json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
-        
-      end # end current_user==nil
-      
-    end # end auth_token param == nil
+    p "SYNC"
+    @request = params[:request]
+
+    p " P REQUEST"
+    p @request
+    res = Request.validate(@request)
     
-    render json: json_res
+    p "RESPONSE:"
+    p res
+    
+    
+    if res[:code] == 6
+      
+      # encontrar proyectos de usuario en db
+      @projects = Project.where("user_id = ?", res[:id])
+      
+      p "DELTE ENTRIES"
+      @projects.each do |p|
+        p.delete  # eliminar los proyectos de la base de datos de este usuario
+      end
+      p "GET JSON PROJECTS"
+      # Actualizar pryectos del JSON
+      @projects = @request[:projects] # proyectos entregados en el API request
+      
+      # convertir a modelo de Rails para guardar en database
+      if @projects != nil
+      @projects.each do |j|
+        p = Project.new
+        p.name = j[:name]
+        p.status = j[:status]
+        p.user_id = res[:id]
+        p.local_id = j[:id]
+        p.save    # guarda entrada de Project asignada a usuario en db
+      end
+    end
+      
+      
+      # encontrar tasks de usuario en db
+      @tasks = Task.where("user_id = ?", res[:id])
+      
+      p "DELTE TASK ENTRIES"
+      @tasks.each do |t|
+        t.delete  # eliminar los tasks de la base de datos de este usuario
+      end
+      p "GET JSON TASKS"
+      # Actualizar tasks del JSON
+      @tasks = @request[:tasks] # tasks entregados en el API request
+      
+      # convertir a modelo de Rails para guardar en database
+      if @tasks != nil
+      @tasks.each do |j|
+        t = Task.new
+        t.name = j[:name]
+        t.status = j[:status]
+        t.user_id = res[:id]
+        t.local_id = j[:id]
+        t.project_id = j[:project_id]
+        t.save    # guarda entrada de Task asignada a usuario en db
+      end
+    end
+      
+      
+    end # end response to code succesful
+    
+    
+  render json: res
     
   end # end sync
   
   
   
-  def getJSON
-    
-  end
-  
-  
-  
-  # DELETE API
-  # Destroys Project model on server database that matches all the fields provided in JSON request
-  # or parameters, as the UPDATE API this call can delete one or several entries if an array is provided
   #
-  def delete
+  # Metodo para retornar proyectos en hash array
+  def getProjects
+    # encontrar proyectos de usuario en db
+    @projects = Project.where("user_id = ?", @res[:id])
     
-    if params[:auth_token] == nil
-      json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
+    p "GET NETRIES FROM DATABASE"
+    p @projects
+    
+    # convertir a modelo de Android para enviar en un json
+    i = 0
+    p_array = []
+    
+    @projects.each do |p| # iterar por los proyectos de la db
+
+      j = {}
+      j[:name] = p[:name]
+      j[:status] = p[:status]
+      j[:id] = p[:local_id]
+      #j[:user_id] = @res[:id]
       
-    else # hay token en parametro auth_token
-      # destruir entradas
-      @current_user = current_user(params[:auth_token])
-      if @current_user != nil
-        json_res = {:status => "OK", :code => 7, :description => "Projects added to database"}
-        
-      else # no encontro user con el token dado
-        json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
-        
-      end # end current_user==nil
+      p_array[i] = j
+      p j
+      i = i + 1
       
-    end # end auth_token param == nil
+      
+    end # end do
+    p "P PARRAY"
+    p p_array
     
-    render json: json_res
+    return p_array
     
-  end # end delete
+    
+  end   # end getProjects
+  
+  
+  
+  #
+  # Metodo para retornar proyectos en hash
+  def getTasks
+    # encontrar tasks de usuario en db
+    @tasks = Task.where("user_id = ?", @res[:id])
+    
+    p "GET TASK NETRIES FROM DATABASE"
+    p @tasks
+    
+    # convertir a modelo de Android para enviar en un json
+    i = 0
+    t_array = []
+    
+    @tasks.each do |t| # iterar por los proyectos de la db
+
+      j = {}
+      j[:name] = t[:name]
+      j[:status] = t[:status]
+      j[:id] = t[:local_id]
+      j[:project_id] = t[:project_id]
+      #j[:user_id] = @res[:id]
+      
+      t_array[i] = j
+      p j
+      i = i + 1
+      
+      
+    end # end do
+    p "T ARRAY"
+    p t_array
+    
+    return t_array
+    
+    
+  end   # end getTasks
+  
+  
   
   
 end # end projectscontroller

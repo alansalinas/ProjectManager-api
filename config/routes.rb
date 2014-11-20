@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get 'tasks/update'
 
   get 'projects/get'
+  post 'projects/get'
+  
+  get 'projects/sync'
+  post 'projects/sync'
 
   get 'projects/update'
 
