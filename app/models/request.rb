@@ -22,16 +22,18 @@ class Request < ActiveRecord::Base
     p "PRINT req"
     p req # debug
     
-    auth_token = req[:auth_token]
-    p auth_token
     
     
-    if auth_token == nil
+    if req[:auth_token] == nil
+      auth_token = req[:auth_token]
+      p auth_token
       p "AUTH TOKEN NIL"
       json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
     else # autenticar manualmente por que no hay metodo en controller aqui
       current_user = User.find_by(auth_token: auth_token)
       p "AUTH NO NIL"
+      auth_token = req[:auth_token]
+      p auth_token
     if current_user != nil
       json_res = {:status => "OK", :code => 6, :nombre => current_user.nombre, :id => current_user.id, :description => "Succesful API call"}
       p "HAY USER"
@@ -59,7 +61,10 @@ class Request < ActiveRecord::Base
     pass = req[:password]
     json_res = {:status => "ERROR", :code => 0, :description => "No name/password"}
     
-    if nombre != nil && pass != nil
+    if req[:nombre] && req[:password]
+      
+      nombre = req[:nombre]
+      pass = req[:password]
       
     p req[:nombre]
     p req[:password]
