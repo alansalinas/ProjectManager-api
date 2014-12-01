@@ -13,7 +13,7 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :daydue
       t.integer :opentasks
       t.integer :totaltasks
-      t.string :coverpath
+      t.string :contentpath
 
       t.timestamps
     end

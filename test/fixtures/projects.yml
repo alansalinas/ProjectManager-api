@@ -13,7 +13,7 @@ one:
   daydue: 1
   opentasks: 1
   totaltasks: 1
-  coverpath: MyString
+  contentpath: MyString
 
 two:
   name: MyString
@@ -28,4 +28,4 @@ two:
   daydue: 1
   opentasks: 1
   totaltasks: 1
-  coverpath: MyString
+  contentpath: MyString

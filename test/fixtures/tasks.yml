@@ -16,6 +16,7 @@ one:
   daydue: 1
   photopath: MyString
   description: MyString
+  contentpath: MyString
 
 two:
   name: MyString
@@ -33,3 +34,4 @@ two:
   daydue: 1
   photopath: MyString
   description: MyString
+  contentpath: MyString

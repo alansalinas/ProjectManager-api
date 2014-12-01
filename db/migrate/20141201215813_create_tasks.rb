@@ -16,6 +16,7 @@ class CreateTasks < ActiveRecord::Migration
       t.integer :daydue
       t.string :photopath
       t.string :description
+      t.string :contentpath
 
       t.timestamps
     end
