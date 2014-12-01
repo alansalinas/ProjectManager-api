@@ -31,11 +31,8 @@ class LoginController < ApplicationController
     
   end # end overwrite
   
-  
-
   #
-  #
-    # "Delete" a login, aka "log the user out"
+  # "Delete" a login, aka "log the user out"
   def destroy
        
     request = params[:request]
@@ -50,5 +47,30 @@ class LoginController < ApplicationController
   
   render json: res
   end # end destroy
+  
+  #
+  # Nuevo user account
+  def new
+    
+    request = params[:request]
+    
+    res = Request.signup(request)
+    
+    render json: res
+    
+  end 
+  
+  
+  #
+  # Deja notificacion de que el usuario quiere cambio de password
+  def forgot
+    
+    request = params[:request]
+    
+    res = Request.forgotPass(request)
+    
+    render json: res
+    
+  end   # end forgot password
 
 end

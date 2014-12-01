@@ -5,9 +5,27 @@ one:
   status: MyString
   local_id: 1
   user_id: 1
+  yearstart: 1
+  monthstart: 1
+  daystart: 1
+  yeardue: 1
+  monthdue: 1
+  daydue: 1
+  opentasks: 1
+  totaltasks: 1
+  coverpath: MyString
 
 two:
   name: MyString
   status: MyString
   local_id: 1
   user_id: 1
+  yearstart: 1
+  monthstart: 1
+  daystart: 1
+  yeardue: 1
+  monthdue: 1
+  daydue: 1
+  opentasks: 1
+  totaltasks: 1
+  coverpath: MyString

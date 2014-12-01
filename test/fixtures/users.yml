@@ -3,11 +3,13 @@
 one:
   nombre: MyString
   password: MyString
-  proyectos: 1
+  email: MyString
   auth_token: MyString
+  request_pass: 1
 
 two:
   nombre: MyString
   password: MyString
-  proyectos: 1
+  email: MyString
   auth_token: MyString
+  request_pass: 1

@@ -70,8 +70,6 @@ class Request < ActiveRecord::Base
       nombre = req[:nombre]
       pass = req[:password]
       
-    p req[:nombre]
-    p req[:password]
     
     if user = User.authenticate(nombre, pass)
       # Save the user ID in the session so it can be used in
@@ -91,7 +89,7 @@ class Request < ActiveRecord::Base
     end
     else
     # else not authenticated with nombre, pass
-    json_res = {:status => "ERROR", :code => 3,  :description => "User nonexistent"}
+    tttttttttttt
     end
     
     # else noname or password
@@ -138,13 +136,9 @@ class Request < ActiveRecord::Base
     
     if nombre != nil && pass != nil
       
-    p req[:nombre]
-    p req[:password]
     
     if user = User.authenticate(nombre, pass)
-      # Save the user ID in the session so it can be used in
-      # subsequent requests
-      #session[:current_user_id] = user.id
+      
       p user.id
       
       key = Devise.friendly_token
@@ -165,8 +159,69 @@ class Request < ActiveRecord::Base
   
   return json_res
     
-  end
+  end   # end forcelogin
   
   
+  #
+  # Crea cuenta de usuario nueva en base de datos
+  def self.signup(req)
+    
+    nombre = req[:nombre]
+    pass = req[:password]
+    email = req[:email]
+    json_res = {:status => "ERROR", :code => 0, :description => "No name/password"}
+    
+    if nombre != nil && pass != nil && email != nil
+      
+    p "nomre: " + req[:nombre]
+    p "pass: " + req[:password]
+    p "email: " + req[:email]
+    
+    user = User.new
+      
+    key = Devise.friendly_token
+    user.auth_token = key
+    user.nombre = nombre
+    user.password = pass
+    user.request_pass = 0
+    user.save
+      
+    json_res = {:status => "OK", :code => 7, :nombre => user.nombre, :id => user.id, :auth_token => key} # account created
+      
+    # noname or password, json response already set
+    end
+  
+  return json_res
+    
+    
+  end     # end signup
+  
+  
+  #
+  # notificacion para user que necesita cambio de password
+  def self.forgotPass(req)
+    
+    nombre = req[:nombre]
+    
+    json_res = {:status => "ERROR", :code => 0, :description => "No name/password"}
+    
+    if nombre != nil
+      
+    p "nombre: " + req[:nombre]
+    
+    
+    user = User.find_by(:nombre => nombre)
+    
+    if user != nil
+      json_res = {:status => "OK", :code => 8, :nombre => nombre} # password change notified
+      user.request_pass = 1
+    end
+    
+      
+    # noname or password, json response already set
+    end
+  
+  return json_res
+  end   # end forgotPass
   
 end # end class Request

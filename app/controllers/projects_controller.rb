@@ -65,8 +65,17 @@ class ProjectsController < ApplicationController
         p = Project.new
         p.name = j[:name]
         p.status = j[:status]
-        p.user_id = res[:id]
-        p.local_id = j[:id]
+        p.user_id = res[:id].to_i
+        p.local_id = j[:id].to_i
+        p.yearstart = j[:yearstart].to_i
+        p.monthstart = j[:monthstart].to_i
+        p.daystart = j[:daystart].to_i
+        p.yeardue = j[:yeardue].to_i
+        p.monthdue = j[:monthdue].to_i
+        p.daydue = j[:daydue].to_i
+        p.opentasks = j[:opentasks].to_i
+        p.totaltasks = j[:totaltasks].to_i
+        p.coverpath = j[:coverpath]
         p.save    # guarda entrada de Project asignada a usuario en db
       end
     end #end projects nil
@@ -89,9 +98,19 @@ class ProjectsController < ApplicationController
         t = Task.new
         t.name = j[:name]
         t.status = j[:status]
-        t.user_id = res[:id]
-        t.local_id = j[:id]
+        t.user_id = res[:id].to_i
+        t.local_id = j[:id].to_i
         t.project_id = j[:project_id]
+        t.priority = j[:priority]
+        t.percentage = j[:percentage].to_i
+        t.yearstart = j[:yearstart].to_i
+        t.monthstart = j[:monthstart].to_i
+        t.daystart = j[:daystart].to_i
+        t.yeardue = j[:yeardue].to_i
+        t.monthdue = j[:monthdue].to_i
+        t.daydue = j[:daydue].to_i
+        t.photopath = j[:photopath]
+        t.description = j[:description]
         t.save    # guarda entrada de Task asignada a usuario en db
       end
     end

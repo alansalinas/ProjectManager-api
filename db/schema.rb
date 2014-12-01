@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118235448) do
+ActiveRecord::Schema.define(version: 20141201032841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 20141118235448) do
     t.string   "status"
     t.integer  "local_id"
     t.integer  "user_id"
+    t.integer  "yearstart"
+    t.integer  "monthstart"
+    t.integer  "daystart"
+    t.integer  "yeardue"
+    t.integer  "monthdue"
+    t.integer  "daydue"
+    t.integer  "opentasks"
+    t.integer  "totaltasks"
+    t.string   "coverpath"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -36,6 +45,16 @@ ActiveRecord::Schema.define(version: 20141118235448) do
     t.integer  "local_id"
     t.integer  "user_id"
     t.integer  "project_id"
+    t.string   "priority"
+    t.integer  "percentage"
+    t.integer  "yearstart"
+    t.integer  "monthstart"
+    t.integer  "daystart"
+    t.integer  "yeardue"
+    t.integer  "monthdue"
+    t.integer  "daydue"
+    t.string   "photopath"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,8 +62,9 @@ ActiveRecord::Schema.define(version: 20141118235448) do
   create_table "users", force: true do |t|
     t.string   "nombre"
     t.string   "password"
-    t.integer  "proyectos"
+    t.string   "email"
     t.string   "auth_token"
+    t.integer  "request_pass"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

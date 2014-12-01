@@ -6,6 +6,16 @@ one:
   local_id: 1
   user_id: 1
   project_id: 1
+  priority: MyString
+  percentage: 1
+  yearstart: 1
+  monthstart: 1
+  daystart: 1
+  yeardue: 1
+  monthdue: 1
+  daydue: 1
+  photopath: MyString
+  description: MyString
 
 two:
   name: MyString
@@ -13,3 +23,13 @@ two:
   local_id: 1
   user_id: 1
   project_id: 1
+  priority: MyString
+  percentage: 1
+  yearstart: 1
+  monthstart: 1
+  daystart: 1
+  yeardue: 1
+  monthdue: 1
+  daydue: 1
+  photopath: MyString
+  description: MyString
