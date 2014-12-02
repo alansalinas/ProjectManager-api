@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'fotos/create'
+
   get 'tasks/get'
 
   get 'tasks/update'

@@ -89,7 +89,7 @@ class Request < ActiveRecord::Base
     end
     else
     # else not authenticated with nombre, pass
-    tttttttttttt
+    
     end
     
     # else noname or password
@@ -177,6 +177,8 @@ class Request < ActiveRecord::Base
     p "pass: " + req[:password]
     p "email: " + req[:email]
     
+    u = User.find_by(:nombre => nombre)
+    if u == nil
     user = User.new
       
     key = Devise.friendly_token
@@ -187,7 +189,7 @@ class Request < ActiveRecord::Base
     user.save
       
     json_res = {:status => "OK", :code => 7, :nombre => user.nombre, :id => user.id, :auth_token => key} # account created
-      
+    end
     # noname or password, json response already set
     end
   

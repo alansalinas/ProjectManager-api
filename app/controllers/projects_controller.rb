@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
         p.daydue = j[:daydue].to_i
         p.opentasks = j[:opentasks].to_i
         p.totaltasks = j[:totaltasks].to_i
-        p.coverpath = j[:coverpath]
+        p.contentpath = j[:contentpath]
         p.save    # guarda entrada de Project asignada a usuario en db
       end
     end #end projects nil
@@ -111,6 +111,7 @@ class ProjectsController < ApplicationController
         t.daydue = j[:daydue].to_i
         t.photopath = j[:photopath]
         t.description = j[:description]
+        t.contentpath = j[:contentpath]
         t.save    # guarda entrada de Task asignada a usuario en db
       end
     end
