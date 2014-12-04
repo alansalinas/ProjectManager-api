@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
     
     p @res
       
-    if res[:code] == 6 
+    if @res[:code] == 6 
 
       @res[:projects] = getProjects
       @res[:tasks] = getTasks
