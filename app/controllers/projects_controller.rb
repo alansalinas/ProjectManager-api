@@ -131,6 +131,7 @@ class ProjectsController < ApplicationController
   # Metodo para retornar proyectos en hash array
   def getProjects
     # encontrar proyectos de usuario en db
+     p "GET NETRIES FROM DATABASE"
     @projects = Project.where("user_id = ?", @res[:id])
     
     p "GET NETRIES FROM DATABASE"
