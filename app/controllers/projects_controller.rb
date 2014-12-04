@@ -147,6 +147,18 @@ class ProjectsController < ApplicationController
       j[:name] = p[:name]
       j[:status] = p[:status]
       j[:id] = p[:local_id]
+      j[:yearstart] = p[:yearstart]
+      j[:monthstart] = p[:monthstart]
+      j[:daystart] = p[:daystart]
+      
+      j[:yeardue] = p[:yeardue]
+      j[:monthdue] = p[:monthdue]
+      j[:daydue] = p[:daydue]
+      
+      j[:opentasks] = p[:opentasks]
+      j[:totaltasks] = p[:totaltasks]
+      j[:contentpath] = p[:contentpath]
+      
       #j[:user_id] = @res[:id]
       
       p_array[i] = j
@@ -186,6 +198,23 @@ class ProjectsController < ApplicationController
       j[:id] = t[:local_id]
       j[:project_id] = t[:project_id]
       #j[:user_id] = @res[:id]
+      
+      j[:priority] = p[:priority]
+      j[:percentage] = p[:percentage]
+      j[:description] = p[:description]
+      j[:contentpath] = p[:contentpath]
+      
+      j[:yeardue] = p[:yeardue]
+      j[:monthdue] = p[:monthdue]
+      j[:daydue] = p[:daydue]
+      
+      j[:yearstart] = t[:yearstart]
+      j[:monthstart] = t[:monthstart]
+      j[:daystart] = t[:daystart]
+      
+      j[:yeardue] = t[:yeardue]
+      j[:monthdue] = t[:monthdue]
+      j[:daydue] = t[:daydue]
       
       t_array[i] = j
       p j
