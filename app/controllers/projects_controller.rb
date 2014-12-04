@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
     
     p @res
       
-    if res[:code] == 6
+    if res[:code] == 6 
 
       @res[:projects] = getProjects
       @res[:tasks] = getTasks
@@ -22,7 +22,8 @@ class ProjectsController < ApplicationController
       
     end # end response to code succesful
     
-    
+    p "RES"
+    p @res
   render json: @res
     
   end #end get
