@@ -53,9 +53,11 @@ class ProjectsController < ApplicationController
       @projects = Project.where("user_id = ?", res[:id])
       
       p "DELTE ENTRIES"
+      if @projects != nil
       @projects.each do |p|
         p.delete  # eliminar los proyectos de la base de datos de este usuario
       end
+    end
       p "GET JSON PROJECTS"
       # Actualizar pryectos del JSON
       @projects = @request[:projects] # proyectos entregados en el API request
@@ -86,9 +88,11 @@ class ProjectsController < ApplicationController
       @tasks = Task.where("user_id = ?", res[:id])
       
       p "DELTE TASK ENTRIES"
+      if @tasks != nil
       @tasks.each do |t|
         t.delete  # eliminar los tasks de la base de datos de este usuario
       end
+    end
       p "GET JSON TASKS"
       # Actualizar tasks del JSON
       @tasks = @request[:tasks] # tasks entregados en el API request
