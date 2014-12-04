@@ -9,12 +9,12 @@ class ProjectsController < ApplicationController
 
     p " P REQUEST"
     p @request
-    @res = Request.validate(@request)
+    @res = Request.getprojects(@request)
     
     
     p @res
       
-    if @res[:code] == 6 
+    if @res[:code] == 8 
 
       @res[:projects] = getProjects
       @res[:tasks] = getTasks
@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
 
     p " P REQUEST"
     p @request
-    res = Request.validate(@request)
+    res = Request.sync(@request)
     
     p "RESPONSE:"
     p res

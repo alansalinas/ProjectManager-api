@@ -18,7 +18,7 @@ class Request < ActiveRecord::Base
   
   #
   # Validate the API request json and return corresponding response with CODE
-  def self.validate(req)
+  def self.sync(req)
     p "PRINT req"
     p req # debug
     
@@ -51,6 +51,40 @@ class Request < ActiveRecord::Base
   return json_res
   
   end # end validate
+  
+  def self.getprojects(req)
+    p "PRINT req getproejcts"
+    p req # debug
+    
+    
+    
+    if req[:auth_token] == nil
+      auth_token = req[:auth_token]
+      p auth_token
+      p "AUTH TOKEN NIL"
+      json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
+    else # autenticar manualmente por que no hay metodo en controller aqui
+      auth_token = req[:auth_token]
+      p auth_token
+      current_user = User.find_by(auth_token: auth_token)
+      p "AUTH NO NIL"
+      p current_user
+      
+    if current_user != nil
+      p current_user.nombre
+      p current_user.id
+      json_res = {:status => "OK", :code => 8, :nombre => current_user.nombre, :id => current_user.id, :description => "Succesful API call"}
+      p "HAY USER"
+    else
+      p "NOHAY USER"
+      json_res = {:status => "ERROR", :code => 1, :description => "Invalid auth token"}
+    end
+    
+  end #end authtoken nil
+  
+  return json_res
+  
+  end # end getprojects
   
   
   #
